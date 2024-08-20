@@ -5,9 +5,20 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        BigInteger num1 = new BigInteger(scanner.nextLine());
-        BigInteger num2 = new BigInteger(scanner.nextLine());
-        BigInteger sum = num1.add(num2);
-        System.out.println(sum);
+        int num = Integer.parseInt(scanner.nextLine());
+        System.out.println(Factorial(num));
+    }
+
+    public static BigInteger Factorial(int num) {
+        if (num == 0 || num == 1) {
+            return BigInteger.valueOf(1);
+        } else {
+            BigInteger sum = new BigInteger(String.valueOf(1));
+            for (int i = 2; i <= num ; i++) {
+                sum = sum.multiply(BigInteger.valueOf(i));
+            }
+            return sum;
+        }
+
     }
 }
