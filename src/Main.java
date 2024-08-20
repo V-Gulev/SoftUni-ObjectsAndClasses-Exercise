@@ -3,68 +3,81 @@ import java.util.*;
 
 public class Main {
 
-    public static class Song {
-        private String typeList;
-        private String name;
-        private String time;
+    public static class Students {
+        private String firstName;
+        private String lastName;
+        private int age;
+        private String city;
 
-        public String getTypeList() {
-            return typeList;
+        public Students(String firstName, String lastName, int age, String city) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+            this.city = city;
         }
 
-        public void setTypeList(String typeList) {
-            this.typeList = typeList;
+        public String getFirstName() {
+            return firstName;
         }
 
-        public String getName() {
-            return name;
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public String getLastName() {
+            return lastName;
         }
 
-        public String getTime() {
-            return time;
+        public void setLastNameName(String lastName) {
+            this.lastName = lastName;
         }
 
-        public void setTime(String time) {
-            this.time = time;
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setLastName(int age) {
+            this.age = age;
         }
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int numSongs = Integer.parseInt(scanner.nextLine());
 
-        List<Song> songs = new ArrayList<>();
-        for (int i = 0; i < numSongs; i++) {
-            String[] data = scanner.nextLine().split("_");
 
-            String type = data[0];
-            String name = data[1];
-            String time = data[2];
-
-            Song song = new Song();
-
-            song.setTypeList(type);
-            song.setName(name);
-            song.setTime(time);
-            songs.add(song);
-        }
-        String typeList = scanner.nextLine();
-
-        if (typeList.equals("all")) {
-            for (Song song : songs) {
-                System.out.println(song.getName());
+        List<Students> students = new ArrayList<>();
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equals("end")) {
+                break;
             }
-        } else {
-            for (Song song : songs) {
-                if (song.getTypeList().equals(typeList)) {
-                    System.out.println(song.getName());
-                }
+            String[] data = input.split(" ");
+
+            String firstName = data[0];
+            String lastName = data[1];
+            int age = Integer.parseInt(data[2]);
+            String city = data[3];
+
+            Students student = new Students(firstName,lastName,age,city);
+            students.add(student);
+
+        }
+        String city = scanner.nextLine();
+
+        for (Students student : students) {
+            if (student.getCity().equals(city)) {
+                System.out.printf("%s %s is %d years old%n",student.getFirstName(),student.getLastName(),student.getAge());
             }
         }
+
 
     }
 }
