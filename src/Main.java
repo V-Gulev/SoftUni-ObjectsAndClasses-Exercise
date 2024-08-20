@@ -1,21 +1,13 @@
+import java.math.BigInteger;
 import java.util.*;
 
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        String[] words = input.split(" ");
-        Random rnd = new Random();
-
-        for (int i = 0; i < words.length; i++) {
-            int random = rnd.nextInt(words.length);
-            String temporary = words[i];
-            words[i] = words[random];
-            words[random] = temporary;
-        }
-        for (String word : words) {
-            System.out.println(word);
-        }
+        BigInteger num1 = new BigInteger(scanner.nextLine());
+        BigInteger num2 = new BigInteger(scanner.nextLine());
+        BigInteger sum = num1.add(num2);
+        System.out.println(sum);
     }
 }
