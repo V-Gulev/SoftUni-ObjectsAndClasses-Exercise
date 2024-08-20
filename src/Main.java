@@ -66,15 +66,26 @@ public class Main {
             int age = Integer.parseInt(data[2]);
             String city = data[3];
 
-            Students student = new Students(firstName,lastName,age,city);
-            students.add(student);
+            Students student = new Students(firstName, lastName, age, city);
+            int studentIndex = -1;
+            for (int i = 0; i < students.size(); i++) {
+                Students checkStudent = students.get(i);
+                if (checkStudent.getFirstName().equals(student.getFirstName()) && checkStudent.getLastName().equals(student.getLastName())) {
+                    studentIndex = i;
+                }
+            }
+            if (studentIndex == -1) {
+                students.add(student);
+            } else {
+                students.set(studentIndex, student);
+            }
 
         }
         String city = scanner.nextLine();
 
         for (Students student : students) {
             if (student.getCity().equals(city)) {
-                System.out.printf("%s %s is %d years old%n",student.getFirstName(),student.getLastName(),student.getAge());
+                System.out.printf("%s %s is %d years old%n", student.getFirstName(), student.getLastName(), student.getAge());
             }
         }
 
