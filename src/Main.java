@@ -1,177 +1,102 @@
 import java.util.*;
 
 public class Main {
+    static class Engine {
+        int speed;
+        int power;
 
-    public static class Employee {
-        private String name;
-        private double salary;
-        private String position;
-        private String department;
-        private String email;
-        private int age;
-
-        public Employee(String name, double salary, String position, String department, String email, int age) {
-            this.name = name;
-            this.salary = salary;
-            this.position = position;
-            this.department = department;
-            this.email = email;
-            this.age = age;
-        }
-
-        public Employee(String name, double salary, String position, String department, String email) {
-            this.name = name;
-            this.salary = salary;
-            this.position = position;
-            this.department = department;
-            this.email = email;
-            this.age = -1;
-        }
-
-        public Employee(String name, double salary, String position, String department, int age) {
-            this.name = name;
-            this.salary = salary;
-            this.position = position;
-            this.department = department;
-            this.email = "n/a";
-            this.age = age;
-        }
-
-        public Employee(String name, double salary, String position,String department) {
-            this.department = department;
-            this.name = name;
-            this.salary = salary;
-            this.position = position;
-            this.email = "n/a";
-            this.age = -1;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public double getSalary() {
-            return salary;
-        }
-
-        public void setSalary(double salary) {
-            this.salary = salary;
-        }
-
-        public String getPosition() {
-            return position;
-        }
-
-        public void setPosition(String position) {
-            this.position = position;
-        }
-
-        public String getDepartment() {
-            return department;
-        }
-
-        public void setDepartment(String department) {
-            this.department = department;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        public void setAge(int age) {
-            this.age = age;
-        }
-        public String toString() {
-            return String.format("%s %.2f %s %d", name, salary, email, age);
+        public Engine(int speed, int power) {
+            this.speed = speed;
+            this.power = power;
         }
     }
-    static class Department {
-        String name;
-        List<Employee> employees;
 
-        public Department(String name) {
-            this.name = name;
-            this.employees = new ArrayList<>();
+    static class Cargo {
+        int weight;
+        String type;
+
+        public Cargo(int weight, String type) {
+            this.weight = weight;
+            this.type = type;
+        }
+    }
+
+    static class Tires {
+        int age;
+        double pressure;
+
+        public Tires(int age, double pressure) {
+            this.age = age;
+            this.pressure = pressure;
+        }
+    }
+
+    static class Car {
+        private String model;
+        Engine engine;
+        Cargo cargo;
+        Tires[] tires;
+
+        public Car(String model, Engine engine, Cargo cargo, Tires[] tires) {
+            this.model = model;
+            this.engine = engine;
+            this.cargo = cargo;
+            this.tires = tires;
         }
 
-        public void addEmployee(Employee employee) {
-            employees.add(employee);
+        public String getModel() {
+            return model;
         }
 
-        public double getAverageSalary() {
-            return employees.stream().mapToDouble(e -> e.salary).average().orElse(0.0);
-        }
-
-        public List<Employee> getEmployees() {
-            return employees;
+        public void setModel(String model) {
+            this.model = model;
         }
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = Integer.parseInt(scanner.nextLine());
-        List<Department> departments = new ArrayList<>();
-        Employee employee;
+        List<Car> cars = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            String[] input = scanner.nextLine().split(" ");
-            String name = input[0];
-            double salary = Double.parseDouble(input[1]);
-            String position = input[2];
-            String department = input[3];
-            if (input.length == 4) {
-                employee = new Employee(name,salary,position,department);
-            } else if (input.length == 5) {
-                String data = input[4];
-                if (Character.isDigit(data.charAt(0))) {
-                    employee = new Employee(name, salary,position,department,Integer.parseInt(data));
-                } else {
-                    employee = new Employee(name, salary, position, department, data);
-                }
-            } else {
-                String email = input[4];
-                int age = Integer.parseInt(input[5]);
-                employee = new Employee(name,salary,position,department,email,age);
+            String[] carInfo = scanner.nextLine().split(" ");
+            String model = carInfo[0];
+            int engineSpeed = Integer.parseInt(carInfo[1]);
+            int enginePower = Integer.parseInt(carInfo[2]);
+            int cargoWeight = Integer.parseInt(carInfo[3]);
+            String cargoType = carInfo[4];
+
+            Tires[] tires = new Tires[4];
+            for (int j = 0; j < 4; j++) {
+                double pressure = Double.parseDouble(carInfo[5 + j * 2]);
+                int age = Integer.parseInt(carInfo[6 + j * 2]);
+                tires[j] = new Tires(age, pressure);
             }
+            Engine engine = new Engine(engineSpeed, enginePower);
+            Cargo cargo = new Cargo(cargoWeight, cargoType);
+            Car car = new Car(model, engine, cargo, tires);
 
-            Department departmentType = findDepartment(departments, department);
-            if (departmentType == null) {
-                departmentType = new Department(department);
-                departments.add(departmentType);
-            }
-
-            departmentType.addEmployee(employee);
-
+            cars.add(car);
         }
 
-        Department MaxAverageSalary = departments.stream()
-                .max(Comparator.comparing(Department::getAverageSalary))
-                .orElse(null);
+        String typeOfCargo = scanner.nextLine();
 
-        if (MaxAverageSalary != null) {
-            System.out.println("Highest Average Salary: " + MaxAverageSalary.name);
-            MaxAverageSalary.getEmployees().stream()
-                    .sorted(Comparator.comparing(Employee::getSalary).reversed())
-                    .forEach(System.out::println);
+        if (typeOfCargo.equals("fragile")) {
+            cars.stream()
+                    .filter(car -> car.cargo.type.equals("fragile"))
+                    .filter(car -> {
+                        for (Tires tire : car.tires) {
+                            if (tire.pressure < 1) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    })
+                    .forEach(car -> System.out.println(car.model));
+        } else if (typeOfCargo.equals("flamable")) {
+            cars.stream()
+                    .filter(car -> car.cargo.type.equals("flamable"))
+                    .filter(car -> car.engine.power > 250)
+                    .forEach(car -> System.out.println(car.model));
         }
-    }
-    public static Department findDepartment(List<Department> departments, String name) {
-        for (Department department : departments) {
-            if (department.name.equals(name)) {
-                return department;
-            }
-        }
-        return null;
     }
 }
