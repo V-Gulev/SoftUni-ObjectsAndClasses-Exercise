@@ -1,102 +1,116 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
-    static class Engine {
-        int speed;
+    public static class Engine {
+        String model;
         int power;
+        String displacement;
+        String efficiency;
 
-        public Engine(int speed, int power) {
-            this.speed = speed;
+        public Engine(String model, int power) {
+            this.model = model;
             this.power = power;
+            this.displacement = "n/a";
+            this.efficiency = "n/a";
+        }
+
+        public Engine(String model, int power, String displacement) {
+            this.model = model;
+            this.power = power;
+            this.displacement = displacement;
+            this.efficiency = "n/a";
+        }
+
+        public Engine(String model, int power, String displacement, String efficiency) {
+            this.model = model;
+            this.power = power;
+            this.displacement = displacement;
+            this.efficiency = efficiency;
+        }
+        public String toString() {
+            return String.format("  %s:%n    Power: %d%n    Displacement: %s%n    Efficiency: %s",
+                    model, power, displacement, efficiency);
         }
     }
-
-    static class Cargo {
-        int weight;
-        String type;
-
-        public Cargo(int weight, String type) {
-            this.weight = weight;
-            this.type = type;
-        }
-    }
-
-    static class Tires {
-        int age;
-        double pressure;
-
-        public Tires(int age, double pressure) {
-            this.age = age;
-            this.pressure = pressure;
-        }
-    }
-
-    static class Car {
-        private String model;
+    public static class Car {
+        String model;
         Engine engine;
-        Cargo cargo;
-        Tires[] tires;
+        String weight;
+        String colour;
 
-        public Car(String model, Engine engine, Cargo cargo, Tires[] tires) {
+        public Car(String model, Engine engine) {
             this.model = model;
             this.engine = engine;
-            this.cargo = cargo;
-            this.tires = tires;
+            this.weight = "n/a";
+            this.colour = "n/a";
         }
 
-        public String getModel() {
-            return model;
-        }
-
-        public void setModel(String model) {
+        public Car(String model, Engine engine, String weight) {
             this.model = model;
+            this.engine = engine;
+            this.weight = weight;
+            this.colour = "n/a";
+        }
+
+        public Car(String model, Engine engine, String weight, String colour) {
+            this.model = model;
+            this.engine = engine;
+            this.weight = weight;
+            this.colour = colour;
+        }
+
+        public String toString() {
+            return String.format("%s:%n%s%n  Weight: %s%n  Color: %s",
+                    model, engine.toString(), weight, colour);
         }
     }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = Integer.parseInt(scanner.nextLine());
-        List<Car> cars = new ArrayList<>();
+        Map<String, Engine> engineMap = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            String[] carInfo = scanner.nextLine().split(" ");
-            String model = carInfo[0];
-            int engineSpeed = Integer.parseInt(carInfo[1]);
-            int enginePower = Integer.parseInt(carInfo[2]);
-            int cargoWeight = Integer.parseInt(carInfo[3]);
-            String cargoType = carInfo[4];
-
-            Tires[] tires = new Tires[4];
-            for (int j = 0; j < 4; j++) {
-                double pressure = Double.parseDouble(carInfo[5 + j * 2]);
-                int age = Integer.parseInt(carInfo[6 + j * 2]);
-                tires[j] = new Tires(age, pressure);
+            String[] input = scanner.nextLine().split(" ");
+            String model = input[0];
+            int power = Integer.parseInt(input[1]);
+            Engine engine;
+            if (input.length == 2) {
+                engine = new Engine(model,power);
+            } else if (input.length == 3) {
+                String data = input[2];
+                if (Character.isDigit(data.charAt(0))) {
+                    engine = new Engine(model,power, data);
+                } else {
+                    engine = new Engine(model, power, "n/a", data);
+                }
+            } else {
+                engine = new Engine(model, power, input[2], input[3]);
             }
-            Engine engine = new Engine(engineSpeed, enginePower);
-            Cargo cargo = new Cargo(cargoWeight, cargoType);
-            Car car = new Car(model, engine, cargo, tires);
-
-            cars.add(car);
+            engineMap.put(model, engine);
         }
 
-        String typeOfCargo = scanner.nextLine();
+        int m = Integer.parseInt(scanner.nextLine());
 
-        if (typeOfCargo.equals("fragile")) {
-            cars.stream()
-                    .filter(car -> car.cargo.type.equals("fragile"))
-                    .filter(car -> {
-                        for (Tires tire : car.tires) {
-                            if (tire.pressure < 1) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    })
-                    .forEach(car -> System.out.println(car.model));
-        } else if (typeOfCargo.equals("flamable")) {
-            cars.stream()
-                    .filter(car -> car.cargo.type.equals("flamable"))
-                    .filter(car -> car.engine.power > 250)
-                    .forEach(car -> System.out.println(car.model));
+        for (int i = 0; i < m; i++) {
+            String[] input = scanner.nextLine().split(" ");
+            String model = input[0];
+            Engine engine = engineMap.get(input[1]);
+            Car car;
+            if (input.length == 2) {
+                car = new Car(model,engine);
+            } else if (input.length == 3) {
+                String data = input[2];
+                if (Character.isDigit(data.charAt(0))) {
+                    car = new Car(model, engine, data, "n/a");
+                } else {
+                    car = new Car(model,engine,"n/a", data);
+                }
+            }  else {
+                car = new Car(model, engine, input[2], input[3]);
+            }
+            System.out.println(car);
         }
     }
 }
