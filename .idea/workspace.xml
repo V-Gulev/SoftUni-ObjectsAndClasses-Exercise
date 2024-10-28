@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d6da1ae-9a81-49c2-9b42-2b03e2c8838c" name="Changes" comment="Teamwork projects">
-      <change afterPath="$PROJECT_DIR$/src/Article.java" afterDir="false" />
+    <list default="true" id="0d6da1ae-9a81-49c2-9b42-2b03e2c8838c" name="Changes" comment="Article">
+      <change afterPath="$PROJECT_DIR$/src/AdvertisementMessage_01/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/OpinionPoll_03/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/OpinionPoll_03/OpinionPoll.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Articles_02/Article.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Articles_02/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +99,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724340213551</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Article">
+      <option name="closed" value="true" />
+      <created>1730131597889</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1730131597889</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -104,6 +115,7 @@
     <MESSAGE value="Raw Data" />
     <MESSAGE value="Car Salesman" />
     <MESSAGE value="Teamwork projects" />
-    <option name="LAST_COMMIT_MESSAGE" value="Teamwork projects" />
+    <MESSAGE value="Article" />
+    <option name="LAST_COMMIT_MESSAGE" value="Article" />
   </component>
 </project>

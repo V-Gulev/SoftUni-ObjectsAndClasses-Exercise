@@ -1,3 +1,5 @@
+package Articles_02;
+
 public class Article {
     private String title;
     private String content;
