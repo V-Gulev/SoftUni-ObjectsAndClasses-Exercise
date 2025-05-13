@@ -1,1 +1,1 @@
-Objects and Classes Exercises
+SoftUni Objects and Classes Exercises
